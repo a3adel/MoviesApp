@@ -3,8 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.adel.moviesapp.MovieDetailActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/discover_menu"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/discover_menu"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/top_rated"
+        android:title="@string/top_rated_menu"
+        android:visible="true"/>
+    <item
+        android:id="@+id/popular_menu_item"
+        android:title="@string/popular_menu"/>
 </menu>

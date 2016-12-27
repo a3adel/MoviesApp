@@ -54,6 +54,9 @@ public class AllMoviesAdapter extends RecyclerView.Adapter<AllMoviesAdapter.MyVi
     public int getItemCount() {
         return movieModel.getResults().size();
     }
+    public void setData(MovieModel movieModel){
+        this.movieModel=movieModel;
+    }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.movie_poster_imageview)

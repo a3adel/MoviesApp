@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,12 @@ public class MovieDetailFragment extends Fragment {
     CollapsingToolbarLayout toolBar;
     @BindView(R.id.overview_textView)
     TextView overviewTextView;
+    @BindView(R.id.movie_release_date_textView)
+    TextView releaseDateTextView;
+    @BindView(R.id.ratingBar)
+    RatingBar ratingBar;
     Drawable drawable;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,20 +53,23 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
-        Toast.makeText(getActivity(), movie.getTitle()
-                , Toast.LENGTH_SHORT).show();
-        ButterKnife.bind(this,view);
+
+        ButterKnife.bind(this, view);
         toolBar.setTitle(movie.getTitle());
         overviewTextView.setText(movie.getOverview());
-        String imagePath= APIController.getInstance().getImageBaseUrl()+movie.getPoster_path();
+        String imagePath = APIController.getInstance().getImageBaseUrl() + movie.getPoster_path();
+        releaseDateTextView.setText(movie.getRelease_date());
+        float avg=(float) movie.getVote_average()/10;
+        avg*=5;
+        ratingBar.setRating(avg);
+        ratingBar.setClickable(false);
         Picasso.with(container.getContext()).load(imagePath).into(new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                drawable=new BitmapDrawable(bitmap);
+                drawable = new BitmapDrawable(bitmap);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     toolBar.setBackground(drawable);
-                }
-                else
+                } else
                     toolBar.setBackgroundDrawable(drawable);
 
             }

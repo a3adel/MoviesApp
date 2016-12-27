@@ -25,8 +25,7 @@ public class APIController {
                 .build();
     }
 
-    public String getImageBaseUrl()
-    {
+    public String getImageBaseUrl() {
         return imageBaseURL;
     }
 
@@ -58,7 +57,42 @@ public class APIController {
         }
     }
 
-    public void getPopularMovies(NetworkResponse<MovieModel>networkResponse){
+    public void getPopularMovies(final NetworkResponse<MovieModel> networkResponse) {
+        APIEndPoints.PopularMovies popularMoviesEndPoint = retrofitObject.create(APIEndPoints.PopularMovies.class);
+        try {
+            Call<MovieModel> call = popularMoviesEndPoint.getPopular();
+            call.enqueue(new Callback<MovieModel>() {
+                @Override
+                public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+                    networkResponse.onResponse(response.body());
+                }
 
+                @Override
+                public void onFailure(Call<MovieModel> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+        }
+    }
+
+    public void getTopRated(final NetworkResponse<MovieModel> networkResponse) {
+        APIEndPoints.TopRatedMovies topRatedMovies = retrofitObject.create(APIEndPoints.TopRatedMovies.class);
+        try {
+            Call<MovieModel> call = topRatedMovies.getTopRatedMovies();
+            call.enqueue(new Callback<MovieModel>() {
+                @Override
+                public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+                    networkResponse.onResponse(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<MovieModel> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
     }
 }
