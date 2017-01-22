@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adel.moviesapp.Models.Results;
 import com.example.adel.moviesapp.Models.TrailerResponseModel;
@@ -42,14 +44,27 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     Drawable drawable;
     MovieDetailContract.MovieDetailPresenter movieDetailPresenter;
     int movieId;
+    final static String MOVIE = "_movie";
 
+    public static MovieDetailFragment getInstance(Results movie) {
+        MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+       // Results mMovie=movie;
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(MOVIE, movie);
+        movieDetailFragment.setArguments(bundle);
+        return movieDetailFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        movie = (Results) bundle.getSerializable(MovieDetailActivity.MOVIE);
-        movieId=movie.getId();
+        movie = (Results) bundle.getSerializable(MOVIE);
+        Log.i("IID",movie.getId()+"");
+        Log.i("name",movie.getTitle()
+                +"");
+        movieId = movie.getId();
+        movieDetailPresenter.fetchTrailer(movieId);
     }
 
     @Nullable
@@ -93,11 +108,11 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     @Override
     public void setPresenter(MovieDetailContract.MovieDetailPresenter presenter) {
         movieDetailPresenter = presenter;
-        presenter.fetchTrailer(movieId);
+
     }
 
     @Override
     public void onTrailersFetched(TrailerResponseModel trailerResponseModel) {
-
+        Toast.makeText(getActivity(),trailerResponseModel.getId()+ "", Toast.LENGTH_SHORT).show();
     }
 }

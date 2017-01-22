@@ -1,5 +1,7 @@
 package com.example.adel.moviesapp.movieDetail;
 
+import android.util.Log;
+
 import com.example.adel.moviesapp.Models.TrailerResponseModel;
 import com.example.adel.moviesapp.callbacks.NetworkResponse;
 import com.example.adel.moviesapp.controllers.APIController;
@@ -16,10 +18,12 @@ public class MovieDetailPresenter implements MovieDetailContract.MovieDetailPres
     }
 
     @Override
-    public void fetchTrailer(int movieId) {
+    public void fetchTrailer(final int movieId) {
         APIController.getInstance().getMovieTrailers(movieId, new NetworkResponse<TrailerResponseModel>() {
             @Override
             public void onResponse(TrailerResponseModel response) {
+                Log.d("MYID", movieId + ""
+                );
                 mView.onTrailersFetched(response);
             }
         });

@@ -100,10 +100,16 @@ public class APIController {
     public void getMovieTrailers(int movieId, final NetworkResponse<TrailerResponseModel> networkResponse) {
         APIEndPoints.MovieTrailer movieTrailers = retrofitObject.create(APIEndPoints.MovieTrailer.class);
         try {
+
             Call<TrailerResponseModel> call = movieTrailers.getMovieTrailer(movieId);
             call.enqueue(new Callback<TrailerResponseModel>() {
                 @Override
                 public void onResponse(Call<TrailerResponseModel> call, Response<TrailerResponseModel> response) {
+                    if(response.body()!=null)
+                        Log.d("IIIId",response.body().getId()+"");
+                    else
+                        Log.d("IIIId","123ffd");
+
                     networkResponse.onResponse(response.body());
                 }
 

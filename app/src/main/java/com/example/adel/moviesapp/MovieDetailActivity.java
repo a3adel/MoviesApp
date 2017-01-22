@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.adel.moviesapp.Models.Results;
 import com.example.adel.moviesapp.movieDetail.MovieDetailFragment;
+import com.example.adel.moviesapp.movieDetail.MovieDetailPresenter;
 
 public class MovieDetailActivity extends AppCompatActivity {
     public final static String MOVIE = "MOVIE";
@@ -21,10 +22,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         Results movie = (Results) intent.getSerializableExtra(MOVIE);
-        MovieDetailFragment movieFragment=new MovieDetailFragment();
-        Bundle bundle=new Bundle();
-        bundle.putSerializable(MOVIE,movie);
-        movieFragment.setArguments(bundle);
+        MovieDetailFragment movieFragment=MovieDetailFragment.getInstance(movie);
+        MovieDetailPresenter movieDetailPresenter=new MovieDetailPresenter(movieFragment);
+        movieFragment.setPresenter(movieDetailPresenter);
         getFragmentManager().beginTransaction().add(R.id.container,movieFragment).commit();
 
 
