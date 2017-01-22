@@ -3,6 +3,7 @@ package com.example.adel.moviesapp.controllers;
 import android.util.Log;
 
 import com.example.adel.moviesapp.Models.MovieModel;
+import com.example.adel.moviesapp.Models.TrailerResponseModel;
 import com.example.adel.moviesapp.callbacks.NetworkResponse;
 
 import retrofit2.Call;
@@ -93,6 +94,25 @@ public class APIController {
             });
         } catch (Exception e) {
 
+        }
+    }
+
+    public void getMovieTrailers(int movieId, final NetworkResponse<TrailerResponseModel> networkResponse) {
+        APIEndPoints.MovieTrailer movieTrailers = retrofitObject.create(APIEndPoints.MovieTrailer.class);
+        try {
+            Call<TrailerResponseModel> call = movieTrailers.getMovieTrailer(movieId);
+            call.enqueue(new Callback<TrailerResponseModel>() {
+                @Override
+                public void onResponse(Call<TrailerResponseModel> call, Response<TrailerResponseModel> response) {
+                    networkResponse.onResponse(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<TrailerResponseModel> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
         }
     }
 }

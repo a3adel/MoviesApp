@@ -11,12 +11,11 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adel.moviesapp.Models.Results;
+import com.example.adel.moviesapp.Models.TrailerResponseModel;
 import com.example.adel.moviesapp.MovieDetailActivity;
 import com.example.adel.moviesapp.R;
 import com.example.adel.moviesapp.controllers.APIController;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by adelmacook on 27/12/16.
  */
 
-public class MovieDetailFragment extends Fragment {
+public class MovieDetailFragment extends Fragment implements MovieDetailContract.MovieDetailView {
     Results movie;
     @BindView(R.id.toolbar_layout)
     CollapsingToolbarLayout toolBar;
@@ -41,12 +40,16 @@ public class MovieDetailFragment extends Fragment {
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
     Drawable drawable;
+    MovieDetailContract.MovieDetailPresenter movieDetailPresenter;
+    int movieId;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         movie = (Results) bundle.getSerializable(MovieDetailActivity.MOVIE);
+        movieId=movie.getId();
     }
 
     @Nullable
@@ -59,8 +62,8 @@ public class MovieDetailFragment extends Fragment {
         overviewTextView.setText(movie.getOverview());
         String imagePath = APIController.getInstance().getImageBaseUrl() + movie.getPoster_path();
         releaseDateTextView.setText(movie.getRelease_date());
-        float avg=(float) movie.getVote_average()/10;
-        avg*=5;
+        float avg = (float) movie.getVote_average() / 10;
+        avg *= 5;
         ratingBar.setRating(avg);
         ratingBar.setClickable(false);
         Picasso.with(container.getContext()).load(imagePath).into(new Target() {
@@ -85,5 +88,16 @@ public class MovieDetailFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void setPresenter(MovieDetailContract.MovieDetailPresenter presenter) {
+        movieDetailPresenter = presenter;
+        presenter.fetchTrailer(movieId);
+    }
+
+    @Override
+    public void onTrailersFetched(TrailerResponseModel trailerResponseModel) {
+
     }
 }
