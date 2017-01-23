@@ -25,16 +25,17 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/trailers_recyclerView"
-            android:background="@android:color/holo_blue_dark"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/overview_textView"
+            android:layout_alignRight="@+id/overview_textView"
             android:layout_below="@+id/ratingBar" />
 
         <TextView
-            android:layout_below="@id/trailers_recyclerView"
             android:id="@+id/overview_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/trailers_recyclerView"
             android:layout_margin="@dimen/text_margin"
             android:text="@string/large_text" />
 

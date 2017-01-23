@@ -22,7 +22,7 @@ public class MovieDetailPresenter implements MovieDetailContract.MovieDetailPres
         APIController.getInstance().getMovieTrailers(movieId, new NetworkResponse<TrailerResponseModel>() {
             @Override
             public void onResponse(TrailerResponseModel response) {
-                Log.d("MYID", movieId + ""
+                Log.d("MYID", response.getTrailers().get(0).getName() + "res"
                 );
                 mView.onTrailersFetched(response);
             }

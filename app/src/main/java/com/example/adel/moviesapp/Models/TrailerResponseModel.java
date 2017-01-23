@@ -1,5 +1,7 @@
 package com.example.adel.moviesapp.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -22,7 +24,8 @@ public class TrailerResponseModel {
     public void setTrailers(ArrayList<TrailerModel> trailers) {
         this.trailers = trailers;
     }
-
+    @SerializedName("id")
     int id;
+    @SerializedName("results")
     ArrayList<TrailerModel>trailers;
 }

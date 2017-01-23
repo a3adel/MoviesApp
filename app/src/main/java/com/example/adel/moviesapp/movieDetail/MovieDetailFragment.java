@@ -8,17 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adel.moviesapp.Models.Results;
 import com.example.adel.moviesapp.Models.TrailerResponseModel;
-import com.example.adel.moviesapp.MovieDetailActivity;
 import com.example.adel.moviesapp.R;
 import com.example.adel.moviesapp.controllers.APIController;
 import com.squareup.picasso.Picasso;
@@ -41,14 +41,17 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     TextView releaseDateTextView;
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
+    @BindView(R.id.trailers_recyclerView)
+    RecyclerView trailersRecyclerView;
     Drawable drawable;
     MovieDetailContract.MovieDetailPresenter movieDetailPresenter;
     int movieId;
     final static String MOVIE = "_movie";
+    TrailersAdapter trailersAdapter;
 
     public static MovieDetailFragment getInstance(Results movie) {
         MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
-       // Results mMovie=movie;
+        // Results mMovie=movie;
         Bundle bundle = new Bundle();
         bundle.putSerializable(MOVIE, movie);
         movieDetailFragment.setArguments(bundle);
@@ -60,11 +63,13 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         movie = (Results) bundle.getSerializable(MOVIE);
-        Log.i("IID",movie.getId()+"");
-        Log.i("name",movie.getTitle()
-                +"");
+        Log.i("IID", movie.getId() + "");
+        Log.i("name", movie.getTitle()
+                + "");
         movieId = movie.getId();
         movieDetailPresenter.fetchTrailer(movieId);
+
+
     }
 
     @Nullable
@@ -73,6 +78,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
         ButterKnife.bind(this, view);
+
+
         toolBar.setTitle(movie.getTitle());
         overviewTextView.setText(movie.getOverview());
         String imagePath = APIController.getInstance().getImageBaseUrl() + movie.getPoster_path();
@@ -113,6 +120,10 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
 
     @Override
     public void onTrailersFetched(TrailerResponseModel trailerResponseModel) {
-        Toast.makeText(getActivity(),trailerResponseModel.getId()+ "", Toast.LENGTH_SHORT).show();
+        Log.d("RES",trailerResponseModel.getId()+"\t"+trailerResponseModel.getTrailers().size());
+        trailersAdapter = new TrailersAdapter(trailerResponseModel);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
+        trailersRecyclerView.setLayoutManager(linearLayoutManager);
+        trailersRecyclerView.setAdapter(trailersAdapter);//  trailersAdapter.set
     }
 }

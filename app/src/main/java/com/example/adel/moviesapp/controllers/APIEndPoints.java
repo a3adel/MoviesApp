@@ -26,7 +26,7 @@ public class APIEndPoints {
     }
 
     public interface MovieTrailer {
-        @GET("movie/{id}/videos?api_key=" + BuildConfig.APIKEY)
+        @GET("3/movie/{id}/videos?api_key=" + BuildConfig.APIKEY)
         Call<TrailerResponseModel> getMovieTrailer(@Path("id") int movieId);
     }
 }
