@@ -1,6 +1,7 @@
 package com.example.adel.moviesapp.movieDetail;
 
 import android.app.Fragment;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -21,6 +22,7 @@ import com.example.adel.moviesapp.Models.Results;
 import com.example.adel.moviesapp.Models.TrailerResponseModel;
 import com.example.adel.moviesapp.R;
 import com.example.adel.moviesapp.controllers.APIController;
+import com.example.adel.moviesapp.data.DataContract;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -120,10 +122,19 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
 
     @Override
     public void onTrailersFetched(TrailerResponseModel trailerResponseModel) {
-        Log.d("RES",trailerResponseModel.getId()+"\t"+trailerResponseModel.getTrailers().size());
+        Log.d("RES", trailerResponseModel.getId() + "\t" + trailerResponseModel.getTrailers().size());
         trailersAdapter = new TrailersAdapter(trailerResponseModel);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
         trailersRecyclerView.setLayoutManager(linearLayoutManager);
         trailersRecyclerView.setAdapter(trailersAdapter);//  trailersAdapter.set
+
+    }
+
+    @Override
+    public void isDataSaved(boolean isDataSaved) {
+        if (isDataSaved) {
+            Cursor cursor = getActivity().getContentResolver().query(DataContract.BASE_CONTENT_URI, null, null, null, "name");
+        }
+
     }
 }

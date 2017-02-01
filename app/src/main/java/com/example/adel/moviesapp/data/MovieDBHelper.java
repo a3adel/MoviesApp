@@ -17,11 +17,12 @@ public class MovieDBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DbSchema.DDL_CREATE_TBL_MOVIES);
+        db.execSQL(DbSchema.DDL_CREATE_TBL_MOVIE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " +  DbSchema.DDL_CREATE_TBL_MOVIE);
 
     }
 }

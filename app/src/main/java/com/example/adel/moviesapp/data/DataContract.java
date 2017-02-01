@@ -1,9 +1,8 @@
 package com.example.adel.moviesapp.data;
 
-import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.provider.ContactsContract;
 
 /**
  * Created by Ahmed Adel on 1/25/2017.
@@ -17,48 +16,41 @@ public final class DataContract {
     /**
      * the content uri of the authority
      **/
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     /**
      * A selection clause for ID based queries.
      */
     public static final String SELECTION_ID_BASED = BaseColumns._ID + " = ? ";
+    public static final String PATH_MOVIE = "movie";
 
     /**
      * Constants for the Movies table of the lentitems provider.
      */
-    public static final class Movies implements CommonColumns {
-        /**
-         * The content URI for this table.
-         */
+    public static final class Movies implements BaseColumns {
+        // Content URI represents the base location for the table
         public static final Uri CONTENT_URI =
-                Uri.withAppendedPath(
-                        ContactsContract.Data.CONTENT_URI,
-                        "movies");
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_MOVIE).build();
 
-        /**
-         * The mime type of a single item.
-         */
+        // These are special type prefixes that specify if a URI returns a list or a specific item
+        public static final String CONTENT_TYPE =
+                "vnd.android.cursor.dir/" + CONTENT_URI + "/" + PATH_MOVIE;
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE +
-                        "/vnd.data.moviesapp.movieItems_items";
+                "vnd.android.cursor.item/" + CONTENT_URI + "/" + PATH_MOVIE;
 
-        /**
-         * A projection of all columns
-         * in the items table.
-         */
-        public static final String[] PROJECTION_ALL =
-                {_ID, NAME, RATE};
+        // Define the table schema
+        public static final String TABLE_NAME = "movieTable";
+        public static final String COLUMN_NAME = "movieName";
+        public static final String COLUMN_RELEASE_DATE = "movieReleaseDate";
 
-        /**
-         * The default sort order for
-         * queries containing NAME fields.
-         */
-        public static final String SORT_ORDER_DEFAULT =
-                NAME + " ASC";
+        // Define a function to build a URI to find a specific movie by it's identifier
+        public static Uri buildMovieUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
     public interface CommonColumns extends BaseColumns {
-        String NAME = "_name";
+        String NAME = Movies.COLUMN_NAME;
         String RATE = "_rate";
+        String RELEASE_DATE = Movies.COLUMN_RELEASE_DATE;
     }
 }

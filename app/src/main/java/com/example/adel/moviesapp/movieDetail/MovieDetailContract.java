@@ -11,6 +11,7 @@ import com.example.adel.moviesapp.Models.TrailerResponseModel;
 public class MovieDetailContract {
     interface MovieDetailView extends BaseView<MovieDetailPresenter> {
         void onTrailersFetched(TrailerResponseModel trailerResponseModel);
+        void isDataSaved(boolean isDataSaved);
     }
 
     interface MovieDetailPresenter extends BasePresenter {
