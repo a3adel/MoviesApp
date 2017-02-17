@@ -6,5 +6,5 @@ package com.example.adel.moviesapp.data.repositories;
 
 public interface SavedDataRepository {
     void saveFlag();
-    void isDataSaved(boolean isDataSaved);
+    boolean isDataSaved();
 }

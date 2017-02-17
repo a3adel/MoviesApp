@@ -1,5 +1,7 @@
 package com.example.adel.moviesapp.allMovies;
 
+import android.database.Cursor;
+
 import com.example.adel.moviesapp.Models.MovieModel;
 import com.example.adel.moviesapp.callbacks.NetworkResponse;
 import com.example.adel.moviesapp.controllers.APIController;
@@ -14,13 +16,18 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     }
 
     @Override
-    public void fetchMovies() {
-        APIController.getInstance().getAllMovies(new NetworkResponse<MovieModel>() {
-            @Override
-            public void onResponse(MovieModel response) {
-                mView.moviesFetched(response);
-            }
-        });
+    public void fetchMovies(boolean shouldLoadFromDB) {
+        if (shouldLoadFromDB) {
+            Cursor c = managedQuery(students, null, null, null, "name");
+
+        } else {
+            APIController.getInstance().getAllMovies(new NetworkResponse<MovieModel>() {
+                @Override
+                public void onResponse(MovieModel response) {
+                    mView.moviesFetched(response);
+                }
+            });
+        }
     }
 
     @Override

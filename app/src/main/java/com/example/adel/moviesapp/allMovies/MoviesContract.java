@@ -12,7 +12,7 @@ public class MoviesContract {
     }
 
     interface Presenter extends BasePresenter {
-        void fetchMovies();
+        void fetchMovies(boolean shouldLoadFromDB);
         void fetchTopRated();
         void fetchPopular();
     }

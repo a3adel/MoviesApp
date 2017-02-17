@@ -8,16 +8,17 @@ import android.content.SharedPreferences;
 
 public class InMemoryDataSavedRepository implements SavedDataRepository {
     SharedPreferences sharedPreferences;
+    private final String IS_DATA_SAVED="isDataSaved";
     public InMemoryDataSavedRepository(SharedPreferences sharedPreferences){
         this.sharedPreferences=sharedPreferences;
     }
     @Override
     public void saveFlag() {
-
+        sharedPreferences.edit().putBoolean(IS_DATA_SAVED,true).apply();
     }
 
     @Override
-    public void isDataSaved(boolean isDataSaved) {
-
+    public boolean isDataSaved() {
+        return sharedPreferences.getBoolean(IS_DATA_SAVED,false);
     }
 }

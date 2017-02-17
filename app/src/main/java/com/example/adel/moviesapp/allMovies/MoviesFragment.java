@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.adel.moviesapp.Models.MovieModel;
 import com.example.adel.moviesapp.R;
+import com.example.adel.moviesapp.data.repositories.RepositoriesInjector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +46,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View {
         unbinder = ButterKnife.bind(this, view);
         moviesRecycler.setLayoutManager(new GridLayoutManager(container.getContext(), 2));
         moviesRecycler.addItemDecoration(new DividerItemDecoration(container.getContext(), DividerItemDecoration.HORIZONTAL));
-        moviesPresenter.fetchMovies();
+        moviesPresenter.fetchMovies(RepositoriesInjector.inMemoryDataSavedRepository(getActivity()).isDataSaved());
         return view;
     }
 
