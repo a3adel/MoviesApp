@@ -5,14 +5,14 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * Created by Ahmed Adel on 1/25/2017.
+ * Created by Maiam on 3/20/2017.
  */
 
-public final class DataContract {
+public class DataContract {
     /**
      * THE AUTHORITY OF THIS CONTRACT
      */
-    public static final String AUTHORITY = "data.moviesapp.movieItems";
+    public static final String AUTHORITY = "com.example.adel.moviesapp.data.MoviesContentProvider";
     /**
      * the content uri of the authority
      **/
@@ -38,8 +38,8 @@ public final class DataContract {
                 "vnd.android.cursor.item/" + CONTENT_URI + "/" + PATH_MOVIE;
 
         // Define the table schema
-        public static final String TABLE_NAME = "movieTable";
-        public static final String COLUMN_NAME = "movieName";
+        public static final String TABLE_NAME = "movies";
+        public static final String COLUMN_NAME = "movie_name";
         public static final String COLUMN_RELEASE_DATE = "movieReleaseDate";
 
         // Define a function to build a URI to find a specific movie by it's identifier

@@ -14,6 +14,7 @@ import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 
 import static com.example.adel.moviesapp.data.DataContract.BASE_CONTENT_URI;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by Ahmed Adel on 1/25/2017.
@@ -62,7 +63,7 @@ public class MoviesContentProvider extends ContentProvider {
                 );
                 break;
             case MOVIE_ID:
-               long _id = ContentUris.parseId(uri);
+                long _id = ContentUris.parseId(uri);
                 retCursor = db.query(
                         DataContract.Movies.TABLE_NAME,
                         projection,

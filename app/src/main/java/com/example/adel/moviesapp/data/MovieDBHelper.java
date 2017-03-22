@@ -10,13 +10,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MovieDBHelper extends SQLiteOpenHelper {
     private static final String NAME = DbSchema.DB_NAME;
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
     public MovieDBHelper(Context context){
         super(context, NAME, null, VERSION);
 
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(DbSchema.DDL_CREATE_TBL_MOVIE);
     }
 

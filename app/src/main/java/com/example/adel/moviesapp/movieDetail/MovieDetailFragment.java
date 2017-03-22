@@ -22,7 +22,6 @@ import com.example.adel.moviesapp.Models.Results;
 import com.example.adel.moviesapp.Models.TrailerResponseModel;
 import com.example.adel.moviesapp.R;
 import com.example.adel.moviesapp.controllers.APIController;
-import com.example.adel.moviesapp.data.DataContract;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -133,7 +132,6 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     @Override
     public void isDataSaved(boolean isDataSaved) {
         if (isDataSaved) {
-            Cursor cursor = getActivity().getContentResolver().query(DataContract.BASE_CONTENT_URI, null, null, null, "name");
         }
 
     }

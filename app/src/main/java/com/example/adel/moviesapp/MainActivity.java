@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.adel.moviesapp.allMovies.AllMoviesInteractorImp;
+import com.example.adel.moviesapp.allMovies.MoviesContract;
 import com.example.adel.moviesapp.allMovies.MoviesFragment;
 import com.example.adel.moviesapp.allMovies.MoviesPresenter;
 import com.example.adel.moviesapp.callbacks.NetworkResponse;
@@ -28,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
         } else {
             MoviesFragment moviesFragment = new MoviesFragment();
-            MoviesPresenter moviesPresenter = new MoviesPresenter(moviesFragment);
+            MoviesContract.Interactor interactor=new AllMoviesInteractorImp(this);
+            MoviesPresenter moviesPresenter = new MoviesPresenter(moviesFragment,interactor);
             moviesFragment.setPresenter(moviesPresenter);
             getFragmentManager().beginTransaction().add(R.id.activity_main, moviesFragment).commit();
         }

@@ -10,21 +10,25 @@ import com.example.adel.moviesapp.controllers.APIController;
 public class MoviesPresenter implements MoviesContract.Presenter {
 
     MoviesContract.View mView;
+    MoviesContract.Interactor interactor;
 
-    public MoviesPresenter(MoviesContract.View mView) {
+    public MoviesPresenter(MoviesContract.View mView, MoviesContract.Interactor interactor) {
         this.mView = mView;
+        this.interactor=interactor;
     }
 
     @Override
     public void fetchMovies(boolean shouldLoadFromDB) {
         if (shouldLoadFromDB) {
-            Cursor c = managedQuery(students, null, null, null, "name");
-
+            interactor.fetchMoviesFromDB();
         } else {
             APIController.getInstance().getAllMovies(new NetworkResponse<MovieModel>() {
                 @Override
                 public void onResponse(MovieModel response) {
                     mView.moviesFetched(response);
+                    interactor.saveMovies(
+                            response
+                    );
                 }
             });
         }
@@ -36,6 +40,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             @Override
             public void onResponse(MovieModel response) {
                 mView.moviesFetched(response);
+
             }
         });
     }

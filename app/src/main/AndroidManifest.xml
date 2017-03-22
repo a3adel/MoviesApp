@@ -26,12 +26,8 @@
             android:label="@string/title_activity_movie_detail"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <provider
-            android:name=".data.MoviesContentProvider"
-            android:authorities="data.moviesapp.movieItems"
-            android:exported="false"
-            android:protectionLevel="signature"
-            android:syncable="true"/>
-
+            android:authorities="com.example.adel.moviesapp.data.MoviesContentProvider"
+            android:name=".data.MoviesContentProvider"/>
     </application>
 
 </manifest>
